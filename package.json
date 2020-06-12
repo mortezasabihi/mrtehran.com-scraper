@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --quiet src/server.js",
+    "start": "node src/server.js",
+    "dev": "nodemon --quiet src/server.js",
     "doc": "jsdoc -c jsdoc.json"
   },
   "keywords": [],
