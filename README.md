@@ -1,4 +1,9 @@
 # mrtehran.com node js scraper
+![Heroku](https://heroku-badge.herokuapp.com/?app=mrtehran-scraper)
+[![GitHub issues](https://img.shields.io/github/issues/mortezasabihi/mrtehran.com-scraper)](https://github.com/mortezasabihi/mrtehran.com-scraper/issues)
+[![GitHub forks](https://img.shields.io/github/forks/mortezasabihi/mrtehran.com-scraper)](https://github.com/mortezasabihi/mrtehran.com-scraper/network)
+[![GitHub stars](https://img.shields.io/github/stars/mortezasabihi/mrtehran.com-scraper)](https://github.com/mortezasabihi/mrtehran.com-scraper/stargazers)
+[![GitHub license](https://img.shields.io/github/license/mortezasabihi/mrtehran.com-scraper)](https://github.com/mortezasabihi/mrtehran.com-scraper/blob/master/LICENSE)
 
 mrtehran.com node js scrapper with api
 
