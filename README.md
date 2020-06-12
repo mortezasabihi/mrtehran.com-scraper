@@ -4,6 +4,8 @@ mrtehran.com node js scrapper with api
 
 [Demo](https://mrtehran-scraper.herokuapp.com/)
 
+[Api Documentation](https://github.com/mortezasabihi/mrtehran.com-scraper/wiki/Api-documentation)
+
 ## Features
 
 - Scrape all songs on https://mrtehran.com/browse/featured page
