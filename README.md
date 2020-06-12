@@ -27,6 +27,12 @@ npm install
 npm run start
 ```
 
+## Start project in development mode
+
+```
+npm run dev
+```
+
 ## Generate code documentation
 
 ```
