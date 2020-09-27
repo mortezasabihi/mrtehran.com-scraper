@@ -1,5 +1,4 @@
 const { cheerioInit } = require("../html");
-// const { getMusic } = require("../music/music");
 
 /**
  * All musics module
@@ -53,6 +52,12 @@ const getMusicArtist = ($) => $.find("small").text();
  */
 const getMusicCover = ($) => $.find("img").attr("src");
 
+/**
+ * Get all musics
+ * @param {number} [page] - page (optional)
+ * @function
+ * @returns {array}
+ */
 const getAllMusics = (page = 1) => {
   return cheerioInit(`https://mrtehran.com/browse/featured/page-${page}`).then(
     ($) => {
