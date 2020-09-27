@@ -21,6 +21,7 @@ module.exports = {
       const RESULT = await getAllArtists(PAGE);
       response(res, 200, RESULT);
     } catch (error) {
+      console.log(error);
       response(res, 400, error);
     }
   },
