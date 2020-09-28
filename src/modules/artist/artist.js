@@ -8,6 +8,38 @@ const { getMusic } = require("../music/music");
  */
 
 /**
+ * Get artist name
+ * @param {function} $ - Cheerio
+ * @function
+ * @returns {string}
+ */
+const getArtistName = ($) => $("h2.mb-0").text();
+
+/**
+ * Get artist cover
+ * @param {function} $ - Cheerio
+ * @function
+ * @returns {string}
+ */
+const getArtistCover = ($) => {
+  const DOM = new JSDOM($(".w-100 .container-sm .rounded-lg").html());
+  return DOM.window.document
+    .querySelector("div")
+    .style._values["background-image"].slice(4, -1);
+};
+
+/**
+ * Get artist bio
+ * @param {function} $ - Cheerio
+ * @function
+ * @returns {string}
+ */
+const getArtistBio = ($) => {
+  const BIO = $("#biography .w-100").text();
+  return BIO !== "Biography not found." ? BIO : null;
+};
+
+/**
  * Get artist
  * @param {number} id - artist id
  * @function
@@ -17,53 +49,10 @@ const getArtist = (id) => {
   return cheerioInit(`https://mrtehran.com/artist/${id}`).then(($) => {
     return {
       name: getArtistName($),
-      social: getSocialMediaLinks($),
       cover: getArtistCover($),
+      bio: getArtistBio($),
     };
   });
-};
-
-/**
- * Get artist name
- * @param {function} $ - Cheerio
- * @function
- * @returns {string}
- */
-const getArtistName = ($) => $(".title-container h1").text();
-
-/**
- * Get artist social media links
- * @param {function} $ - Cheerio
- * @function
- * @returns {array}
- */
-const getSocialMediaLinks = ($) => {
-  let socialLinks = [];
-
-  $("a.follow-button").each((i, elem) => {
-    const LINK = {
-      title: $(elem).text().toLowerCase(),
-      url: $(elem).attr("href"),
-    };
-
-    socialLinks.push(LINK);
-  });
-
-  return socialLinks;
-};
-
-/**
- * Get artist cover
- * @param {function} $ - Cheerio
- * @function
- * @returns {string}
- */
-const getArtistCover = ($) => {
-  const HTML = new JSDOM($.html(".wall-bg-container"));
-  const STRING = Object.values(
-    HTML.window.document.querySelector(".wall-bg-container").style._values
-  ).toString();
-  return STRING.substring(4).slice(0, -1);
 };
 
 /**
@@ -74,10 +63,10 @@ const getArtistCover = ($) => {
  */
 const getArtistMusics = (id) => {
   return cheerioInit(`https://mrtehran.com/artist/${id}`).then(($) => {
-    const SECTION = $(".musicbox-tracks .musicbox-item");
+    const SECTION = $(".all-tracks-section .mt-item-track");
 
     return Promise.all(
-      Array.from(SECTION, (elem) => getMusic($(elem).attr("mtp-data-url")))
+      Array.from(SECTION, (elem) => getMusic($(elem).attr("data-url")))
     );
   });
 };
@@ -90,15 +79,15 @@ const getArtistMusics = (id) => {
  */
 const getArtistAlbums = (id) => {
   return cheerioInit(`https://mrtehran.com/artist/${id}`).then(($) => {
-    const SECTION = $(".row.px-2").last();
+    const SECTION = $(".row-cols-lg-3").last();
     let albums = [];
 
     $(SECTION)
-      .find(".col-sm-4")
+      .find(".col")
       .each((i, elem) => {
         const ALBUM = {
-          title: $(elem).find(".item-title").text(),
-          url: $(elem).find("a").attr("href"),
+          title: $(elem).find("a.text-truncate").text(),
+          url: $(elem).find("a.text-truncate").attr("href"),
           cover: $(elem).find("img").attr("src"),
         };
 
@@ -112,7 +101,6 @@ const getArtistAlbums = (id) => {
 module.exports = {
   getArtist,
   getArtistName,
-  getSocialMediaLinks,
   getArtistCover,
   getArtistMusics,
   getArtistAlbums,

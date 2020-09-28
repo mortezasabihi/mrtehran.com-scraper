@@ -39,6 +39,7 @@ module.exports = {
       response(res, 200, RESULT);
     } catch (error) {
       response(res, 400, error);
+      console.log(error);
     }
   },
   /**
