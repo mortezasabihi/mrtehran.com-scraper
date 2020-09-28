@@ -6,20 +6,12 @@ const { cheerioInit } = require("../html");
  */
 
 /**
- * Get music url
- * @param {function} $ - Cheerio
- * @function
- * @returns {string}
- */
-const getMusicUrl = ($) => $("link[rel='canonical']").attr("href");
-
-/**
  * Get music title
  * @param {function} $ - Cheerio
  * @function
  * @returns {string}
  */
-const getMusicTitle = ($) => $(".gp-titles-content h1").text();
+const getMusicTitle = ($) => $("h3").text();
 
 /**
  * Get music artist
@@ -27,7 +19,7 @@ const getMusicTitle = ($) => $(".gp-titles-content h1").text();
  * @function
  * @returns {string}
  */
-const getMusicArtist = ($) => $(".gp-tags-content a").text();
+const getMusicArtist = ($) => $(".mt-item-track-single").attr("data-artist");
 
 /**
  * Get music download link
@@ -35,19 +27,8 @@ const getMusicArtist = ($) => $(".gp-tags-content a").text();
  * @function
  * @returns {array}
  */
-const getMusicDownloadLink = ($) => {
-  const FILES = [];
-
-  $("#mt-modal-download .col-4").each((i, elem) => {
-    const FILE = $(elem).find("a").attr("href");
-    let QUALITY = FILE.split("/")[4].split("_")[1];
-    QUALITY = typeof QUALITY === "undefined" ? "320" : QUALITY.toString();
-
-    FILES.push({ url: FILE, quality: QUALITY });
-  });
-
-  return FILES;
-};
+const getMusicDownloadLink = ($) =>
+  $(".mt-item-track-single").attr("data-song");
 
 /**
  * Get music cover
@@ -55,7 +36,7 @@ const getMusicDownloadLink = ($) => {
  * @function
  * @returns {string}
  */
-const getMusicCover = ($) => $(".gp-artwork-content img").attr("src");
+const getMusicCover = ($) => $(".bg-color-white-trans img").attr("src");
 
 /**
  * Get music
@@ -68,15 +49,13 @@ const getMusic = (url) => {
     return {
       title: getMusicTitle($),
       artist: getMusicArtist($),
-      files: getMusicDownloadLink($),
+      file: getMusicDownloadLink($),
       cover: getMusicCover($),
-      url: getMusicUrl($),
     };
   });
 };
 
 module.exports = {
-  getMusicUrl,
   getMusicTitle,
   getMusicArtist,
   getMusicDownloadLink,
